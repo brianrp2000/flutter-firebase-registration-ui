@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:registration/home_page.dart';
+import 'package:registration/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final loginButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 10.0),
       child: RaisedButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
@@ -64,6 +65,21 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {},
     );
 
+    final registerButton = Padding(
+      padding: EdgeInsets.zero,
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        onPressed: () {
+          Navigator.of(context).pushNamed(RegisterPage.tag);
+        },
+        padding: EdgeInsets.all(12),
+        color: Colors.lightGreen,
+        child: Text('Reigster', style: TextStyle(color: Colors.white)),
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -78,6 +94,7 @@ class _LoginPageState extends State<LoginPage> {
             password,
             SizedBox(height: 24.0),
             loginButton,
+            registerButton,
             forgotLabel
           ],
         ),
