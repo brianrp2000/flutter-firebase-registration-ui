@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:registration/register_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:registration/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -76,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         onPressed: () {
           signIn(emailController.text, passwordController.text).then((uid) => {
-            print(uid)
+            Navigator.of(context).pushNamed(HomePage.tag)
           }).catchError((error) => {
             processError(error)
           });
@@ -147,6 +148,10 @@ class _LoginPageState extends State<LoginPage> {
     } else if (error.code == "ERROR_WRONG_PASSWORD") {
       setState(() {
         _errorMessage = "Incorrect password.";
+      });
+    } else {
+      setState(() {
+        _errorMessage = "There was an error logging in. Please try again later.";
       });
     }
   }
