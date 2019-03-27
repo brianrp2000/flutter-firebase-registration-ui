@@ -8,7 +8,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  
   @override
   Widget build(BuildContext context) {
 
@@ -72,17 +71,32 @@ class _RegisterPageState extends State<RegisterPage> {
     );
 
     final registerButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.0),
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        onPressed: () {
+          registerUser();
+        },
+        padding: EdgeInsets.all(12),
+        color: Colors.lightGreen,
+        child: Text('Sign Up'.toUpperCase(), style: TextStyle(color: Colors.white)),
+      ),
+    );
+
+    final cancelButton = Padding(
       padding: EdgeInsets.zero,
       child: RaisedButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
-          Navigator.of(context).pushNamed(RegisterPage.tag);
+          Navigator.of(context).pop();
         },
         padding: EdgeInsets.all(12),
-        color: Colors.lightGreen,
-        child: Text('Sign Up'.toUpperCase(), style: TextStyle(color: Colors.white)),
+        color: Colors.grey,
+        child: Text('Cancel'.toUpperCase(), style: TextStyle(color: Colors.white)),
       ),
     );
 
@@ -106,9 +120,14 @@ class _RegisterPageState extends State<RegisterPage> {
             confirmPassword,
             SizedBox(height: 24.0),
             registerButton,
+            cancelButton,
           ],
         ),
       ),
     );
+  }
+
+  void registerUser() {
+
   }
 }

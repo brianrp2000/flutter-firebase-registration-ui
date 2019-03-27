@@ -11,6 +11,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
@@ -133,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+
   }
 
   Future<String> signIn(final String email, final String password) async {
