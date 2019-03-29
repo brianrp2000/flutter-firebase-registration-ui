@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
         ),
         onPressed: () {
           _firebaseAuth.signOut();
-          Navigator.of(context).pop();
+          Navigator.popUntil(context, (Route<dynamic> route) => route.isFirst);
         },
         padding: EdgeInsets.all(12),
         color: Colors.lightGreen,

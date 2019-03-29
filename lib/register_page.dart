@@ -38,7 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
               key: _formKey,
               child: ListView(
                 shrinkWrap: true,
-                padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                padding: EdgeInsets.only(top: 36.0, left: 24.0, right: 24.0),
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.all(8.0),
