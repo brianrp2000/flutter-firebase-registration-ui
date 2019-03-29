@@ -12,6 +12,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
+  // Create a global key that will uniquely identify the Form widget and allow
+  // us to validate the form
+  //
+  // Note: This is a GlobalKey<FormState>, not a GlobalKey<MyCustomFormState>!
+  final _formKey = GlobalKey<FormState>();
+
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
@@ -49,6 +55,11 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final email = TextFormField(
+      validator: (value) {
+        if (value.isEmpty || !value.contains('@')) {
+          return 'Please enter a valid email.';
+        }
+      },
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
       controller: emailController,
@@ -77,11 +88,13 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
-          signIn(emailController.text, passwordController.text).then((uid) => {
-            Navigator.of(context).pushNamed(HomePage.tag)
-          }).catchError((error) => {
-            processError(error)
-          });
+          if(_formKey.currentState.validate()) {
+            signIn(emailController.text, passwordController.text).then((uid) => {
+              Navigator.of(context).pushNamed(HomePage.tag)
+            }).catchError((error) => {
+              processError(error)
+            });
+          }
         },
         padding: EdgeInsets.all(12),
         color: Colors.lightBlueAccent,
@@ -115,24 +128,27 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.only(left: 24.0, right: 24.0),
-          children: <Widget>[
-            logo,
-            SizedBox(height: 24.0),
-            errorMessage,
-            SizedBox(height: 12.0),
-            email,
-            SizedBox(height: 8.0),
-            password,
-            SizedBox(height: 24.0),
-            loginButton,
-            registerButton,
-            forgotLabel
-          ],
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(left: 24.0, right: 24.0),
+            children: <Widget>[
+              logo,
+              SizedBox(height: 24.0),
+              errorMessage,
+              SizedBox(height: 12.0),
+              email,
+              SizedBox(height: 8.0),
+              password,
+              SizedBox(height: 24.0),
+              loginButton,
+              registerButton,
+              forgotLabel
+            ],
+          ),
         ),
-      ),
+      )
     );
 
   }

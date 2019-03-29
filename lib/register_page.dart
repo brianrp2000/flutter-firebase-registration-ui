@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:registration/home_page.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -29,8 +30,18 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+  String _errorMessage = '';
+
+  void processError(final PlatformException error) {
+    setState(() {
+      _errorMessage = error.message;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -45,6 +56,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Text(
                       'Register',
                       style: TextStyle(fontSize: 36.0, color: Colors.black87),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '$_errorMessage',
+                      style: TextStyle(fontSize: 14.0, color: Colors.red),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -194,7 +213,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               Navigator.of(context).pushNamed(HomePage.tag);
                             });
                           }).catchError((onError) {
-                            print(onError);
+                            processError(onError);
                           });
                         }
                       },
@@ -218,5 +237,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ))),
     );
+
+
   }
+
 }
