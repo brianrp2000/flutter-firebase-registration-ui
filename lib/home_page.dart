@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     final welcome = Padding(
       padding: EdgeInsets.all(8.0),
       child: Text(
-        '$_name',
+        'Hello $_name',
         style: TextStyle(fontSize: 28.0, color: Colors.white),
       ),
     );
@@ -91,10 +91,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _getName() async {
-    Firestore.instance.document('test/3K7mnDV8yhu2VfKPv9gz').get().then((onValue) {
-      setState(() {
-        _name = onValue.data['name'];
-        print('Set ' + _name);
+    _firebaseAuth.currentUser().then((onValue) {
+      Firestore.instance.collection('users').document(onValue.uid).snapshots().listen((userData) {
+        if (userData.data.containsKey('firstName') && userData.data.containsKey('lastName')) {
+          setState(() {
+            _name = userData.data['firstName'] + ' ' + userData.data['lastName'];
+          });
+        }
       });
     });
   }
