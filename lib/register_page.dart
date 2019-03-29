@@ -33,11 +33,12 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-          padding: new EdgeInsets.all(25.0),
+      body: Center(
           child: Form(
               key: _formKey,
               child: ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.only(left: 24.0, right: 24.0),
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.all(8.0),
